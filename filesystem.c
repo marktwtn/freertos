@@ -48,7 +48,7 @@ int fs_open(const char * path, int flags, int mode) {
     slash = strchr(path, '/');
     
     if (!slash)
-        return -2;
+        return -1;
 
     hash = hash_djb2((const uint8_t *) path, slash - path);
     path = slash + 1;
@@ -58,5 +58,5 @@ int fs_open(const char * path, int flags, int mode) {
             return fss[i].cb(fss[i].opaque, path, flags, mode);
     }
     
-    return -2;
+    return -1;
 }
