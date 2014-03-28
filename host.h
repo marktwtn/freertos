@@ -31,8 +31,14 @@ enum HOST_SYSCALL{
 	SYS_TICKFREQ
 };
 
+enum FILE_OPEN_MODE{
+	READ=0,
+	WRITE=4
+};
+
 int host_call(enum HOST_SYSCALL, void *argv) __attribute__((naked));
 
 int host_system(char *cmd);
+int host_savefile(char *cmd, char *data);
 
 #endif 

@@ -30,10 +30,10 @@ cmdlist cl[]={
 	MKCL(ls, "List directory"),
 	MKCL(man, "Show the manual of the command"),
 	MKCL(cat, "Concatenate files and print on the stdout"),
-	MKCL(ps, "Report a snapshot of the current processes"),
+	MKCL(ps, "Report a snapshot of the current processes and save it on host"),
 	MKCL(host, "Run command on host"),
 	MKCL(mmtest, "heap memory allocation test"),
-	MKCL(help, "help")
+	MKCL(help, "help"),
 };
 
 int parse_command(char *str, char *argv[]){
@@ -81,9 +81,12 @@ int filedump(const char *filename){
 }
 
 void ps_command(int n, char *argv[]){
+	int rnt;
 	signed char buf[1024];
 	vTaskList(buf);
-	fio_printf(1, "\r\n%s\r\n", buf);	
+	fio_printf(1, "\r\n%s\r\n", buf);
+	rnt = host_savefile(argv[1], buf);
+	fio_printf(1, "\r\nfinish with exit code %d.\r\n", rnt);	
 }
 
 void cat_command(int n, char *argv[]){
